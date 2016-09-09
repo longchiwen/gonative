@@ -10,9 +10,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/codegangsta/cli"
-	"github.com/inconshreveable/axiom"
 	log "github.com/inconshreveable/log15"
+	"github.com/longchiwen/axiom"
+	cli "gopkg.in/urfave/cli.v1"
 )
 
 var Log = log.Root()
@@ -64,10 +64,24 @@ func main() {
 			Name:  "build",
 			Usage: "build a go installation with native stdlib packages",
 			Flags: []cli.Flag{
-				cli.StringFlag{"version", "1.5.2", "version of Go to build", "", nil},
-				cli.StringFlag{"src", "", "path to go source, empty string means to fetch from internet", "", nil},
-				cli.StringFlag{"target", "go", "target directory in which to build Go", "", nil},
-				cli.StringFlag{"platforms", "", "space separated list of platforms to build, default is 'darwin_amd64 freebsd_amd64 linux_386 linux_amd64 windows_386 windows_amd64'", "", nil},
+				cli.StringFlag{
+					Name:   "version",
+					EnvVar: "1.5.2",
+					Usage:  "version of Go to build",
+				},
+				cli.StringFlag{
+					Name:  "src",
+					Usage: "path to go source, empty string means to fetch from internet",
+				},
+				cli.StringFlag{
+					Name:   "target",
+					EnvVar: "go",
+					Usage:  "target directory in which to build Go",
+				},
+				cli.StringFlag{
+					Name:  "platforms",
+					Usage: "space separated list of platforms to build, default is 'darwin_amd64 freebsd_amd64 linux_386 linux_amd64 windows_386 windows_amd64'",
+				},
 			},
 			Action: buildCmd,
 		},
